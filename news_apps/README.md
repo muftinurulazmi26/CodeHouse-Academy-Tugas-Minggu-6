@@ -2,10 +2,10 @@
 
 A new Flutter project.
 
-<img src="https://raw.githubusercontent.com/muftinurulazmi26/CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965914.png" width="200" height="395">
-<img src="https://raw.githubusercontent.com/muftinurulazmi26/CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965957.png" width="200" height="395">
-<img src="https://raw.githubusercontent.com/muftinurulazmi26/CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965957.png" width="200" height="395">
-<img src="https://raw.githubusercontent.com/muftinurulazmi26/CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965987.png" width="200" height="395">
+<img src="https://raw.githubusercontent.com/muftinurulazmi26/-CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965914.png" width="200" height="395">
+<img src="https://raw.githubusercontent.com/muftinurulazmi26/-CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965957.png" width="200" height="395">
+<img src="https://raw.githubusercontent.com/muftinurulazmi26/-CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965963.png" width="200" height="395">
+<img src="https://raw.githubusercontent.com/muftinurulazmi26/-CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965987.png" width="200" height="395">
 
 ## Getting Started
 
