@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:news_apps/controller/home_controller.dart';
 import 'package:news_apps/model/news.dart';
 import 'package:news_apps/pages/profile.dart';
 import 'package:news_apps/repository/news_repository.dart';
@@ -24,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List pagesList = [
-    const HomeScreen(),
+    HomeScreen(),
     const ProfilePage(),
   ];
 
@@ -58,45 +60,18 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({
+class HomeScreen extends StatelessWidget {
+  HomeScreen({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   String name = "";
   late SharedPreferences sharedPreferences;
-  List<News> list_news = [];
-
-  void callAPI() {
-    NewsRepository().getNews().then((List<News> value) {
-      list_news = [...list_news, ...value];
-      setState(() {});
-    }).catchError((err, track) {
-      print("Something wrong ${err} ${track}");
-    });
-  }
-
-  void initShared() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      name = sharedPreferences.getString("name")!;
-    });
-  }
-
-  @override
-  void initState() {
-    callAPI();
-    initShared();
-    super.initState();
-  }
+  late HomeController homeController;
 
   @override
   Widget build(BuildContext context) {
+    homeController = Get.find<HomeController>();
     return SafeArea(
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -164,14 +139,14 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 12,
             ),
             Expanded(
-              child: list_news.isEmpty
+              child: Obx(() => homeController.list_news.isEmpty
                   ? LoadingView()
                   : ListView.builder(
-                      itemCount: list_news.length,
+                      itemCount: homeController.list_news.length,
                       itemBuilder: (context, index) {
-                        return PhotoCard(news: list_news[index]);
+                        return PhotoCard(news: homeController.list_news[index]);
                       },
-                    ),
+                    ),)
             )
           ],
         ),
