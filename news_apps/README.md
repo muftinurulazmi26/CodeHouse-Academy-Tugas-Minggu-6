@@ -1,6 +1,6 @@
 # news_apps
 
-A new Flutter project.
+A new Flutter project with state management Getx.
 
 <img src="https://raw.githubusercontent.com/muftinurulazmi26/-CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965914.png" width="200" height="395">
 <img src="https://raw.githubusercontent.com/muftinurulazmi26/-CodeHouse-Academy-Tugas-Minggu-4/main/news_apps/screenshot/Screenshot_1647965957.png" width="200" height="395">
