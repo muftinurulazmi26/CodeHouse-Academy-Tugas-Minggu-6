@@ -85,11 +85,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProfilePage()),
-                        );
+                        Get.offAllNamed("/profile");
                       },
                       child: Container(
                         width: 40,

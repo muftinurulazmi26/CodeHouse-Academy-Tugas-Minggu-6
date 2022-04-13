@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:news_apps/controller/register_controller.dart';
 import 'package:news_apps/pages/home.dart';
 import 'package:news_apps/pages/login.dart';
 import 'package:news_apps/theme.dart';
@@ -13,47 +15,17 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  GlobalKey<FormState> _key = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController placeOfBirthController = TextEditingController();
-  TextEditingController dateOfBirthController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  bool is_visible = true;
-
-  bool isValidEmail(String email) {
-    return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(email);
-  }
-
-  void saveToPref() async {
-    if (_key.currentState!.validate()) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-
-      sharedPreferences.setString("name", nameController.text);
-      sharedPreferences.setString(
-          "place_of_birth", placeOfBirthController.text);
-      sharedPreferences.setString("date_of_birth", dateOfBirthController.text);
-      sharedPreferences.setString("email", emailController.text);
-      sharedPreferences.setString("password", passwordController.text);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
-    }
-  }
+  late RegisterController registerController;
 
   @override
   Widget build(BuildContext context) {
+    registerController = Get.find<RegisterController>();
     return Scaffold(
       body: SafeArea(
         child: Background(
           child: SingleChildScrollView(
             child: Form(
-              key: _key,
+              key: registerController.key,
               child: Container(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -63,11 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()),
-                              );
+                              Get.offAllNamed("/login");
                             },
                             child: const Icon(Icons.arrow_back_ios)),
                         Text(
@@ -103,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      controller: nameController,
+                      controller: registerController.nameController,
                       decoration: InputDecoration(
                         fillColor: fieldColor,
                         filled: true,
@@ -131,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      controller: placeOfBirthController,
+                      controller: registerController.placeOfBirthController,
                       decoration: InputDecoration(
                         fillColor: fieldColor,
                         filled: true,
@@ -159,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      controller: dateOfBirthController,
+                      controller: registerController.dateOfBirthController,
                       decoration: InputDecoration(
                         fillColor: fieldColor,
                         filled: true,
@@ -185,13 +153,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value!.isEmpty) {
                           return "Email tidak boleh kosong!";
                         } else {
-                          if (!isValidEmail(value)) {
+                          if (!registerController.isValidEmail(value)) {
                             return "Email tidak valid!";
                           }
                         }
                         return null;
                       },
-                      controller: emailController,
+                      controller: registerController.emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         fillColor: fieldColor,
@@ -220,19 +188,19 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                         return null;
                       },
-                      controller: passwordController,
-                      obscureText: is_visible,
+                      controller: registerController.passwordController,
+                      obscureText: registerController.is_visible,
                       decoration: InputDecoration(
                         suffixIcon: GestureDetector(
                           onTap: () {
-                            if (is_visible) {
-                              is_visible = false;
+                            if (registerController.is_visible) {
+                              registerController.is_visible = false;
                             } else {
-                              is_visible = true;
+                              registerController.is_visible = true;
                             }
                             setState(() {});
                           },
-                          child: (is_visible)
+                          child: (registerController.is_visible)
                               ? Image.asset("assets/icons/ic_eye.png")
                               : Image.asset("assets/icons/ic_hidden_eye.png"),
                         ),
@@ -249,8 +217,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 40,
                     ),
                     GestureDetector(
-                      onTap: () async {
-                        saveToPref();
+                      onTap: () {
+                        // saveToPref();
+                        registerController.saveToStorage(context);
                       },
                       child: Container(
                         width: double.infinity,
@@ -284,11 +253,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
-                            );
+                            Get.offAllNamed("/login");
                           },
                           child: Text(
                             "Log in",

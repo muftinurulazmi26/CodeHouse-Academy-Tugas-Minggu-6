@@ -1,5 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:news_apps/controller/login_controller.dart';
 import 'package:news_apps/pages/home.dart';
 import 'package:news_apps/pages/register.dart';
 import 'package:news_apps/theme.dart';
@@ -14,54 +16,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  bool is_visible = true;
-  late SharedPreferences sharedPreferences;
-
-  void initShared() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-  }
-
-  void doLogin() {
-    if (_key.currentState!.validate()) {
-      if (emailController.text == sharedPreferences.getString("email") &&
-          passwordController.text == sharedPreferences.getString("password")) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-      } else {
-        Flushbar(
-          flushbarPosition: FlushbarPosition.TOP,
-          backgroundColor: const Color(0xFFFF5C83),
-            message:
-                'Alamat email atau password yang kamu masukkan salah.',
-            duration: const Duration(seconds: 3),
-          ).show(context);
-        // print("Alamat email atau password yang kamu masukkan salah.");
-      }
-    }
-  }
+  late LoginController loginController;
 
   @override
   void initState() {
-    initShared();
+    // initShared();
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    loginController = Get.find<LoginController>();
     return Scaffold(
       body: SafeArea(
         child: Background(
           child: SingleChildScrollView(
             child: Form(
-              key: _key,
+              key: loginController.key,
               child: Container(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -98,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
-                      controller: emailController,
+                      controller: loginController.emailController,
                       decoration: InputDecoration(
                         fillColor: fieldColor,
                         filled: true,
@@ -126,19 +98,19 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
-                      controller: passwordController,
-                      obscureText: is_visible,
+                      controller: loginController.passwordController,
+                      obscureText: loginController.is_visible,
                       decoration: InputDecoration(
                         suffixIcon: GestureDetector(
                           onTap: () {
-                            if (is_visible) {
-                              is_visible = false;
+                            if (loginController.is_visible) {
+                              loginController.is_visible = false;
                             } else {
-                              is_visible = true;
+                              loginController.is_visible = true;
                             }
                             setState(() {});
                           },
-                          child: (is_visible)
+                          child: (loginController.is_visible)
                               ? Image.asset("assets/icons/ic_eye.png")
                               : Image.asset("assets/icons/ic_hidden_eye.png"),
                         ),
@@ -156,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        doLogin();
+                        loginController.doLogin(context);
                       },
                       child: Container(
                         width: double.infinity,
@@ -190,11 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterPage()),
-                            );
+                            Get.offAllNamed("/register");
                           },
                           child: Text(
                             "Sign up",

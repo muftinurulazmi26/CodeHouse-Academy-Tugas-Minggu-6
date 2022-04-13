@@ -94,12 +94,6 @@ class PhotoCard extends StatelessWidget {
               ),
             ),
           )
-          // Positioned.fill(
-          //   child: Align(
-          //     alignment: Alignment.bottomLeft,
-          //     child:
-          //   ),
-          // )
         ],
       ),
     );
